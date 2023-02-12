@@ -1,2 +1,0 @@
-# dareecha
- Django workshop project
