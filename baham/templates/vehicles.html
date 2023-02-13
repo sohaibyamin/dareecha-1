@@ -1,9 +1,41 @@
-<!DOCTYPE html>
 {% include 'header.html' %}
 
 <main role="main">
 
     <div class="container">
+        <span>
+            <h1>Vehicles seeking your companionship</h1>
+        </span>
+
+        {% if vehicles|length == 0 %}
+        <div class="alert alert-warning" role="alert">
+          No data here, just a digital ghost town 💔
+        </div>
+        {% else %}
+        <table id="dataTable" class="table table-striped display" style="width:100%">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Owner</th>
+                <th scope="col">Model</th>
+                <th scope="col">Color</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for v in vehicles %}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{v.owner.first_name}}</td>
+                <td>{{v.model.vendor}}</td>
+                <td>{{v.color}}</td>
+                <td>{{v.status}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        <a class="btn btn-primary" href="{% url 'create_vehicle' %}">Add Yours >></a>
     </div> <!-- /container -->
 
 </main>
