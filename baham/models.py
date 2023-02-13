@@ -29,14 +29,10 @@ def validate_color(value):
 # Create your models here.
 class VehicleModel(models.Model):
     model_id = models.AutoField(primary_key=True, db_column='id')
-    # E.g. Toyota, Suzuki
     vendor = models.CharField(max_length=20, null=False, blank=False)
-    # E.g. Vitz, Corolla, Swift
     model = models.CharField(max_length=20, null=False, blank=False, default='Unknown')
-    # E.g. Hatch back
     type = models.CharField(max_length=50, choices=[(t.name, t.value) for t in VehicleType],
                             help_text="Select the vehicle chassis type")
-    # Including the driver
     capacity = models.PositiveSmallIntegerField(null=False, default=2)
 
     class Meta:
@@ -67,22 +63,21 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=1, choices=[('M', 'Male'), ('F', 'Female')])
     type = models.CharField(max_length=10, choices=[(t.name, t.value) for t in UserType])
     primary_contact = models.CharField(max_length=20, null=False, blank=False)
-    alternate_contact = models.CharField(max_length=20)
+    alternate_contact = models.CharField(max_length=20, null=True)
     address = models.CharField(max_length=255)
-    address_latitude = models.DecimalField(max_digits=9, decimal_places=6)
-    address_longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    landmark = models.CharField(max_length=255)
+    address_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    address_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    landmark = models.CharField(max_length=255, null=False)
     town = models.CharField(max_length=50, null=False,
                             choices=[('Bin Qasim', 'Bin Qasim'), ('Gadap', 'Gadap'), ('Gulberg', 'Gulberg'),
                                      ('Jamshed', 'Jamshed'), ('Keamari', 'Keamari'), ('Korangi', 'Korangi'),
                                      ('Landhi', 'Landhi'), ('Liaquatabad', 'Liaquatabad'), ('Malir', 'Malir'),
                                      ('New Karachi', 'New Karachi'), ('North Nazimabad', 'North Nazimabad'),
                                      ('Orangi', 'Orangi'), ('SITE', 'SITE'), ('Saddar', 'Saddar'),
-                                     ('Shah Faisal', 'Shah Faisal'), ('Gulshan-e-Iqbal', 'Gulshan-e-Iqbal'),
-                                     ('Liaquatabad', 'Liaquatabad')])
-    date_created = models.DateField(models.DateTimeField(default=now, editable=False))
+                                     ('Shah Faisal', 'Shah Faisal'), ('Gulshan-e-Iqbal', 'Gulshan-e-Iqbal')])
+    date_created = models.DateField(auto_now_add=True)
     active = models.BooleanField(default=True, editable=False)
-    date_deactivated = models.DateField(models.DateTimeField(editable=False))
+    date_deactivated = models.DateTimeField(editable=False, null=True)
     bio = models.TextField()
 
     def __str__(self):
