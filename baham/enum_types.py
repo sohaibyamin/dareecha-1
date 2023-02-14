@@ -5,6 +5,7 @@ class UserType(Enum):
     OWNER = "OWNER"
     COMPANION = "COMPANION"
 
+
 class VehicleType(Enum):
     AUTO_RICKSHAW = "Auto Rickshaw"
     SEDAN = "Sedan"
@@ -19,7 +20,7 @@ class VehicleType(Enum):
 
 
 class VehicleStatus(Enum):
-    AVAILABLE = "AVAILABLE"
-    FULL = "FULL"
-    INACTIVE = "INACTIVE"
-    REMOVED = "REMOVED"
+    AVAILABLE = "Available"
+    FULL = "Full"
+    INACTIVE = "Inactive"
+    REMOVED = "Removed"

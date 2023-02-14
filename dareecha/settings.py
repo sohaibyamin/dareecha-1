@@ -66,6 +66,11 @@ TEMPLATES = [
     },
 ]
 
+SERIALIZATION_MODULES = {
+    'json': 'django.core.serializers.json',
+}
+
+
 WSGI_APPLICATION = 'dareecha.wsgi.application'
 
 

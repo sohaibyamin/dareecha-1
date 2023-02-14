@@ -2,6 +2,7 @@ from django.utils.timezone import now
 from django.contrib.auth.models import User
 from django.db import models
 
+from baham.constants import COLOURS, CHOICES
 from baham.enum_types import VehicleType, VehicleStatus, UserType
 
 
@@ -10,20 +11,7 @@ def validate_color(value):
     '''
     Validate that the value exists in the list of available colors
     '''
-    colors = ['ALICEBLUE', 'ANTIQUEWHITE', 'AQUA', 'AQUAMARINE', 'AZURE', 'BEIGE', 'BISQUE', 'BLACK', 'BLANCHEDALMOND',
-              'BLUE', 'BLUEVIOLET', 'BROWN', 'BURLYWOOD', 'CADETBLUE', 'CHARTREUSE', 'CHOCOLATE', 'CORAL',
-              'CORNFLOWERBLUE', 'CORNSILK', 'CRIMSON', 'CYAN', 'PINK', 'SKYBLUE', 'DIMGREY', 'DODGERBLUE', 'FIREBRICK',
-              'FLORALWHITE', 'FORESTGREEN', 'FUCHSIA', 'GAINSBORO', 'GHOSTWHITE', 'GOLD', 'GOLDENROD',
-              'GOLDENRODYELLOW', 'GRAY', 'GREEN', 'GREENYELLOW', 'GREY', 'HONEYDEW', 'HOTPINK', 'INDIANRED', 'INDIGO',
-              'IVORY', 'KHAKI', 'LAVENDER', 'LAVENDERBLUSH', 'LAWNGREEN', 'LEMONCHIFFON', 'LIME', 'LIMEGREEN', 'LINEN',
-              'MAGENTA', 'MAROON', 'MIDNIGHTBLUE', 'MINTCREAM', 'MISTYROSE', 'MOCCASIN', 'NAVAJOWHITE', 'NAVY',
-              'OLDLACE', 'OLIVE', 'OLIVEDRAB', 'OLIVEGREEN', 'ORANGE', 'ORANGERED', 'ORCHID', 'PALEGOLDENROD',
-              'PALEGREEN', 'PALETURQUOISE', 'PALEVIOLETRED', 'PAPAYAWHIP', 'PEACHPUFF', 'PERU', 'PLUM', 'POWDERBLUE',
-              'PURPLE', 'RED', 'ROSYBROWN', 'ROYALBLUE', 'SADDLEBROWN', 'SALMON', 'SANDYBROWN', 'SEAGREEN', 'SEASHELL',
-              'SIENNA', 'SILVER', 'SLATEBLUE', 'SLATEGRAY', 'SLATEGREY', 'SNOW', 'SPRINGGREEN', 'STEELBLUE', 'TAN',
-              'TEAL', 'THISTLE', 'TOMATO', 'TURQUOISE', 'VIOLET', 'VIOLETRED', 'WHEAT', 'WHITE', 'WHITESMOKE', 'YELLOW',
-              'YELLOWGREEN']
-    return value.upper() in colors
+    return value.upper() in COLOURS
 
 
 # Create your models here.
@@ -68,13 +56,7 @@ class UserProfile(models.Model):
     address_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     address_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     landmark = models.CharField(max_length=255, null=False)
-    town = models.CharField(max_length=50, null=False,
-                            choices=[('Bin Qasim', 'Bin Qasim'), ('Gadap', 'Gadap'), ('Gulberg', 'Gulberg'),
-                                     ('Jamshed', 'Jamshed'), ('Keamari', 'Keamari'), ('Korangi', 'Korangi'),
-                                     ('Landhi', 'Landhi'), ('Liaquatabad', 'Liaquatabad'), ('Malir', 'Malir'),
-                                     ('New Karachi', 'New Karachi'), ('North Nazimabad', 'North Nazimabad'),
-                                     ('Orangi', 'Orangi'), ('SITE', 'SITE'), ('Saddar', 'Saddar'),
-                                     ('Shah Faisal', 'Shah Faisal'), ('Gulshan-e-Iqbal', 'Gulshan-e-Iqbal')])
+    town = models.CharField(max_length=50, null=False, choices=[(c, c) for c in CHOICES])
     date_created = models.DateField(auto_now_add=True)
     active = models.BooleanField(default=True, editable=False)
     date_deactivated = models.DateTimeField(editable=False, null=True)
