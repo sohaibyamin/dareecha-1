@@ -16,20 +16,33 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Owner</th>
                 <th scope="col">Model</th>
-                <th scope="col">Color</th>
-                <th scope="col">Status</th>
+                <th scope="col">Colour</th>
+                <th scope="col">Type</th>
+                <th scope="col">Owner...</th>
+                <th scope="col">Edit</th>
             </tr>
             </thead>
             <tbody>
             {% for v in vehicles %}
             <tr>
-                <th scope="row">1</th>
-                <td>{{v.owner.first_name}}</td>
-                <td>{{v.model.vendor}}</td>
-                <td>{{v.color}}</td>
-                <td>{{v.status}}</td>
+                <th scope="row">{{v.registration_number}}</th>
+                <td>{{v.vendor}} {{v.model}}</td>
+                <td>
+                    <div class="input-color">
+                        <div style="width: 20px; height: 15px; display: inline-block; background-color: {{v.colour}}; border:solid 1px"></div>
+                        <label>{{v.colour}}</label>
+                    </div>
+                </td>
+                <td><img src="/static/images/{{v.type}}.png" width="40px"></td>
+                <td>
+                    <a href="#">{{v.owner_name}}</a>
+                </td>
+                <td>
+                    {% if allow_edit %}
+                    <a class="btn btn-warning" href="#">Edit</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
             </tbody>

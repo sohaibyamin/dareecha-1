@@ -1,19 +1,19 @@
 {% include 'header.html' %}
 
 <script>
-$(document).ready(function(){
-    $("#modelSelection").change(function(){
-        // When the selected option is changed, we'd like to attach associated icon for the car type
-        var values = $("#modelSelection option:selected");
-        const arr = values.text().split('|');
-        if (arr.length > 0) {
-            $("#modelThumbnail").attr('src', "/static/images/" + arr[0] + ".png");
-        }
+    $(document).ready(function(){
+        $("#modelSelection").change(function(){
+            // When the selected option is changed, we'd like to attach associated icon for the car type
+            var values = $("#modelSelection option:selected");
+            const arr = values.text().split('|');
+            if (arr.length > 0) {
+                $("#modelThumbnail").attr('src', "/static/images/" + arr[0] + ".png");
+            }
+        });
     });
-});
 </script>
 
-<form action="save/" method="post" class="row g-3" enctype="multipart/form-data">
+<form action="update/" method="post" class="row g-3">
     {% csrf_token %}
 
     <div class="container">
@@ -35,7 +35,7 @@ $(document).ready(function(){
                 <select class="form-select form-select-lg mb-3" id = "colourSelection" name="colourSelection" required>
                     <option selected disabled value="">Choose...</option>
                     {% for c in colours %}
-                    <option style="color:{{c}}" value="{{c}}">{{c}}</option>
+                    <option style="colour:{{c}}" value="{{c}}">{{c}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -53,16 +53,6 @@ $(document).ready(function(){
                     {% endfor %}
                 </select>
                 <img id="modelThumbnail" src="/static/images/GENERIC_CAR.png" class="rounded mx-auto" alt="..." width="40">
-            </div>
-        </div>
-
-        <div class="row p-2">
-            <div class="col-md-2">
-                <label class="form-label">Pictures</label>
-            </div>
-            <div class="col-md-3">
-                <input type="file" name="frontImage" accept="image/*">
-                <input type="file" name="sideImage" accept="image/*">
             </div>
         </div>
 
@@ -92,7 +82,7 @@ $(document).ready(function(){
             <div class="col-md-2">
             </div>
             <div class="col-md-4">
-                <button class="btn btn-primary" type="submit" id="saveButton">Save</button>
+                <button class="btn btn-primary" type="submit" id="updateButton">Update</button>
             </div>
         </div>
 

@@ -13,39 +13,5 @@ COLOURS = ['ALICEBLUE', 'ANTIQUEWHITE', 'AQUA', 'AQUAMARINE', 'AZURE', 'BEIGE', 
            'TEAL', 'THISTLE', 'TOMATO', 'TURQUOISE', 'VIOLET', 'VIOLETRED', 'WHEAT', 'WHITE', 'WHITESMOKE', 'YELLOW',
            'YELLOWGREEN']
 
-CHOICES = ['Bin Qasim',
-           'Gadap',
-           'Gulberg',
-           'Gulshan-e-Iqbal',
-           'Jamshed',
-           'Keamari',
-           'Korangi',
-           'Landhi',
-           'Liaquatabad',
-           'Malir',
-           'New Karachi',
-           'North Nazimabad',
-           'Orangi',
-           'SITE',
-           'Saddar',
-           'Shah Faisal',
-           ]
-
-# CHOICES = [
-#     ('Bin Qasim', 'Bin Qasim'),
-#     ('Gadap', 'Gadap'),
-#     ('Gulberg', 'Gulberg'),
-#     ('Gulshan-e-Iqbal', 'Gulshan-e-Iqbal'),
-#     ('Jamshed', 'Jamshed'),
-#     ('Keamari', 'Keamari'),
-#     ('Korangi', 'Korangi'),
-#     ('Landhi', 'Landhi'),
-#     ('Liaquatabad', 'Liaquatabad'),
-#     ('Malir', 'Malir'),
-#     ('New Karachi', 'New Karachi'),
-#     ('North Nazimabad', 'North Nazimabad'),
-#     ('Orangi', 'Orangi'),
-#     ('SITE', 'SITE'),
-#     ('Saddar', 'Saddar'),
-#     ('Shah Faisal', 'Shah Faisal')
-# ]
+TOWNS = ['Bin Qasim', 'Gadap', 'Gulberg', 'Gulshan-e-Iqbal', 'Jamshed', 'Keamari', 'Korangi', 'Landhi', 'Liaquatabad',
+           'Malir', 'New Karachi', 'North Nazimabad', 'Orangi', 'SITE', 'Saddar', 'Shah Faisal']

@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -31,15 +33,36 @@ def view_members(request):
 
 def view_vehicles(request):
     template = loader.get_template('vehicles.html')
+    vehicles = Vehicle.objects.filter(status=VehicleStatus.AVAILABLE.name).order_by('-date_added')
+    all_vehicles = []
+    current_user_id = request.user.id
+    for vehicle in vehicles:
+        owner = UserProfile.objects.get(pk=vehicle.owner.id)
+        obj = {
+            'vehicle_id': vehicle.vehicle_id,
+            'registration_number': vehicle.registration_number,
+            'colour': vehicle.colour,
+            'vendor': vehicle.model.vendor,
+            'model': vehicle.model.model,
+            'type': vehicle.model.type,
+            'owner_town': owner.town,
+            'owner_name': owner.user.username,
+            'picture1_url': vehicle.picture1,
+            'picture2_url': vehicle.picture2,
+            'allow_edit': current_user_id == owner.id
+        }
+        all_vehicles.append(obj)
+
     context = {
-        "navbar": "vehicles"
+        "navbar": "vehicles",
+        "vehicles": all_vehicles
     }
     return HttpResponse(template.render(context, request))
 
 
 def create_vehicle(request):
     template = loader.get_template('createvehicle.html')
-    models = VehicleModel.objects.all().values_list('model_id', 'vendor', 'model', 'type').order_by('vendor', 'model').values()
+    models = VehicleModel.objects.all().values_list('model_id', 'vendor', 'model', 'type').order_by('type', 'vendor', 'model').values()
     # FIXME: Is the below even required if the client desires only the owner to be able to create/alter vehicles?
     users = User.objects.filter(is_superuser=False, is_active=True).all().values_list('id', 'first_name', 'last_name', 'email').order_by('first_name', 'last_name').values()
     context = {
@@ -62,8 +85,13 @@ def save_vehicle(request):
     model = VehicleModel.objects.filter(pk=model_id).get()
     # FIXME: this is redundant, why not fetch the user directly?
     owner = UserProfile.objects.filter(pk=owner_id).get()
-    obj = Vehicle(registration_number=registration_number, color=colour, model=model,
+
+    obj = Vehicle(registration_number=registration_number, colour=colour, model=model,
                   owner=owner.user, status=status)
+    if request.FILES.get('frontImage'):
+        obj.picture1 = request.FILES.get('frontImage')
+    if request.FILES.get('frontImage'):
+        obj.picture2 = request.FILES.get('sideImage')
     obj.save()
     return HttpResponseRedirect(reverse(view_vehicles))
 
