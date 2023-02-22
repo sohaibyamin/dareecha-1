@@ -28,7 +28,7 @@
                 <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
             </div>
             <div class="col-md-4">
-                <h2>Fellow</h2>
+                <h2>Companion</h2>
                 <div class="text-center">
                   <img class="img-thumbnail width: 100px;" src="https://th.bing.com/th/id/R.db075d92d8046308d7fc00724cd8eca2?rik=hSbXLkAi8CABgg&pid=ImgRaw&r=0">
                 </div>
@@ -43,6 +43,20 @@
                 <p>You can't miss that junk in blue parked daily right next to the ghostly shopping mall (don't tell me you need a picture). Well, I'm the owner and wanna test its limits. 3 companions needed from Gulshan-e-Iqbal, F.B. Area, or Sakhi Hassan roundabout. Meet me outside at 2:40 any day.</p>
                 <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
             </div>
+
+            <div class="row">
+            {% for v in vehicles %}
+                <div class="col-md-4">
+                    <h2>{{v.owner_first_name}} {{v.owner_last_name}}</h2>
+                    <div class="text-center">
+                  <img class="img-thumbnail width: 100px;" src="media/"{{v.picture1_url}}>
+                    </div>
+                    <p>You can't miss that junk in blue parked daily right next to the ghostly shopping mall (don't tell me you need a picture). Well, I'm the owner and wanna test its limits. 3 companions needed from Gulshan-e-Iqbal, F.B. Area, or Sakhi Hassan roundabout. Meet me outside at 2:40 any day.</p>
+                    <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+                </div>
+            {% endfor %}
+            </div>
+
         </div>
 
         <hr>

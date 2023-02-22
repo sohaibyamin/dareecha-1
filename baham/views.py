@@ -15,10 +15,29 @@ from baham.models import Vehicle, VehicleModel, UserProfile
 def view_index(request):
     template = loader.get_template('home.html')
     # Fetch the last 20 records
-    vehicles = Vehicle.objects.all().order_by('-vehicle_id').values()
+    vehicles = Vehicle.objects.filter(status=VehicleStatus.AVAILABLE.name).order_by('-date_added')[:18]
+    all_vehicles = []
+    current_user_id = request.user.id
+    for vehicle in vehicles:
+        owner = UserProfile.objects.get(pk=vehicle.owner.id)
+        obj = {
+            'vehicle_id': vehicle.vehicle_id,
+            'registration_number': vehicle.registration_number,
+            'colour': vehicle.colour,
+            'vendor': vehicle.model.vendor,
+            'model': vehicle.model.model,
+            'type': vehicle.model.type,
+            'owner_bio': owner.bio,
+            'owner_town': owner.town,
+            'owner_first_name': owner.user.first_name,
+            'owner_last_name': owner.user.last_name,
+            'picture1_url': vehicle.picture1
+        }
+        all_vehicles.append(obj)
+
     context = {
         "navbar": "home",
-        "vehicles": vehicles
+        "vehicles": all_vehicles
     }
     return HttpResponse(template.render(context, request))
 
@@ -56,6 +75,32 @@ def view_vehicles(request):
     context = {
         "navbar": "vehicles",
         "vehicles": all_vehicles
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def view_vehicle(request, id):
+    template = loader.get_template('editvehicle.html')
+    vehicle = Vehicle.objects.get(pk=id)
+    current_user_id = request.user.id
+    owner = UserProfile.objects.get(pk=vehicle.owner.id)
+    obj = {
+        'vehicle_id': vehicle.vehicle_id,
+        'registration_number': vehicle.registration_number,
+        'colour': vehicle.colour,
+        'vendor': vehicle.model.vendor,
+        'model': vehicle.model.model,
+        'type': vehicle.model.type,
+        'owner_town': owner.town,
+        'owner_first_name': owner.user.first_name,
+        'owner_last_name': owner.user.last_name,
+        'picture1_url': vehicle.picture1,
+        'picture2_url': vehicle.picture2,
+        'allow_edit': current_user_id == owner.id
+    }
+    context = {
+        "navbar": "vehicles",
+        "vehicle": obj
     }
     return HttpResponse(template.render(context, request))
 

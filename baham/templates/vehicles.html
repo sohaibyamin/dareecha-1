@@ -26,7 +26,7 @@
             <tbody>
             {% for v in vehicles %}
             <tr>
-                <th scope="row">{{v.registration_number}}</th>
+                <th scope="row"><a href="{% url 'update_vehicle' id={{v.vehicle_id}} %}">{{v.registration_number}}</a></th>
                 <td>{{v.vendor}} {{v.model}}</td>
                 <td>
                     <div class="input-color">
