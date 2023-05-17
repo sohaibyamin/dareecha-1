@@ -9,6 +9,7 @@ from django.urls import reverse
 from baham.constants import COLOURS
 from baham.enum_types import VehicleStatus
 from baham.models import Vehicle, VehicleModel, UserProfile
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -140,6 +141,15 @@ def save_vehicle(request):
     obj.save()
     return HttpResponseRedirect(reverse(view_vehicles))
 
+def delete_vehicle(request, id):
+    obj = get_object_or_404(Vehicle, pk = id)
+    obj.delete(voided_by=request.user)
+    return HttpResponseRedirect(reverse(view_vehicles))
+
+def undelete_vehicle(request, id):
+    obj = get_object_or_404(Vehicle, pk = id)
+    obj.undelete()
+    return HttpResponseRedirect(reverse(view_vehicles))
 
 def view_aboutus(request):
     template = loader.get_template('aboutus.html')
